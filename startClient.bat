@@ -1,0 +1,1 @@
+java -jar rb-api-java-1.0-SNAPSHOT.jar --spring.config.location=file:/config/
