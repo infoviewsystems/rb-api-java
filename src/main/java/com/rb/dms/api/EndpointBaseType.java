@@ -1,4 +1,4 @@
-package com.rb.dms;
+package com.rb.dms.api;
 
 /**
  * Enum with basic DMS endpoints

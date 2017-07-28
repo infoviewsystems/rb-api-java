@@ -1,4 +1,4 @@
-package com.rb.dms;
+package com.rb.dms.api;
 
 import com.rb.dms.model.Entity;
 
@@ -29,6 +29,6 @@ public interface HttpClient {
      * @param body request object witch will be sent as json
      * @return retrieved result
      */
-    Map post(String url, Map<String, String> headers, Map<String, String> params, List<? extends Entity> body);
+    Map post(String url, Map<String, String> headers, Map<String, String> params, List body);
 
 }

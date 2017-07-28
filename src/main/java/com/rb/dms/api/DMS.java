@@ -1,4 +1,4 @@
-package com.rb.dms;
+package com.rb.dms.api;
 
 import com.rb.dms.model.*;
 

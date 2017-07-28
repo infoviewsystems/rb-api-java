@@ -1,8 +1,7 @@
-package com.rb.dms;
+package com.rb.dms.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rb.dms.model.Entity;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -52,7 +51,7 @@ public class DefaultHttpClient implements HttpClient {
     }
 
     @Override
-    public Map post(String url, Map<String, String> headers, Map<String, String> params, List<? extends Entity> body) {
+    public Map post(String url, Map<String, String> headers, Map<String, String> params, List body) {
         List<NameValuePair> postHeaders = getParametersAsList(headers);
         List<NameValuePair> postParams = getParametersAsList(params);
         HttpPost httpPost;
@@ -69,7 +68,7 @@ public class DefaultHttpClient implements HttpClient {
         }
     }
 
-    private Map postEntity(List<? extends Entity> objectForJson, HttpEntityEnclosingRequestBase httpPost) {
+    private Map postEntity(List objectForJson, HttpEntityEnclosingRequestBase httpPost) {
         try {
             HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(objectForJson), ContentType.APPLICATION_JSON);
             httpPost.setEntity(entity);

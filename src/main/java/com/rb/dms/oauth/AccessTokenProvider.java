@@ -1,6 +1,6 @@
 package com.rb.dms.oauth;
 
-import com.rb.dms.HttpClient;
+import com.rb.dms.api.HttpClient;
 
 import java.util.HashMap;
 import java.util.Map;

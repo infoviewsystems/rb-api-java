@@ -1,4 +1,4 @@
-package com.rb.dms;
+package com.rb.dms.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rb.dms.model.*;
@@ -9,7 +9,7 @@ import java.util.*;
 
 public class DMSAPI implements DMS {
 
-    private static final String API_URL_FORMAT = "%s/npapi/%s";
+    private static final String API_URL_FORMAT = "%s/%s";
 
     private HttpClient client;
     private OAuthConfig config;
@@ -28,8 +28,8 @@ public class DMSAPI implements DMS {
         this.dbName = dbName;
     }
 
-    private Map postEntities(List<? extends Entity> body, EndpointBaseType endpointBaseType) {
-        final String url = String.format(API_URL_FORMAT, baseUrl, endpointBaseType.getValue());
+    public Map postEntities(List body, String endpoint) {
+        final String url = String.format(API_URL_FORMAT, baseUrl, endpoint);
 
         if (accessToken == null) {
             accessToken = AccessTokenProvider.getAccessToken(config, client);
@@ -53,8 +53,8 @@ public class DMSAPI implements DMS {
         return response;
     }
 
-    private List<Map<String, Object>> getEntities(EndpointBaseType endpointBaseType) {
-        final String url = String.format(API_URL_FORMAT, baseUrl, endpointBaseType.getValue());
+    public List<Map<String, Object>> getEntities(String endpoint) {
+        final String url = String.format(API_URL_FORMAT, baseUrl, endpoint);
 
         if (accessToken == null) {
             accessToken = AccessTokenProvider.getAccessToken(config, client);
@@ -88,77 +88,77 @@ public class DMSAPI implements DMS {
 
     @Override
     public Map postCompInvoices(List<CompInvoice> body) {
-        return postEntities(body, EndpointBaseType.COMP_INVOICES);
+        return postEntities(body, EndpointBaseType.COMP_INVOICES.getValue());
     }
 
     @Override
     public Map postCreditNotes(List<CreditNote> body) {
-        return postEntities(body, EndpointBaseType.CREDIT_NOTES);
+        return postEntities(body, EndpointBaseType.CREDIT_NOTES.getValue());
     }
 
     @Override
     public Map postCustomers(List<Customer> body) {
-        return postEntities(body, EndpointBaseType.CUSTOMERS);
+        return postEntities(body, EndpointBaseType.CUSTOMERS.getValue());
     }
 
     @Override
     public Map postCustomerContacts(List<CustomerContact> body) {
-        return postEntities(body, EndpointBaseType.CUSTOMER_CONTACTS);
+        return postEntities(body, EndpointBaseType.CUSTOMER_CONTACTS.getValue());
     }
 
     @Override
     public Map postCustomerShipToAddresses(List<CustomerShipToAddress> body) {
-        return postEntities(body, EndpointBaseType.CUSTOMER_SHIP_TO_ADDRESESS);
+        return postEntities(body, EndpointBaseType.CUSTOMER_SHIP_TO_ADDRESESS.getValue());
     }
 
     @Override
     public Map postDebitNotes(List<DebitNote> body) {
-        return postEntities(body, EndpointBaseType.DEBIT_NOTES);
+        return postEntities(body, EndpointBaseType.DEBIT_NOTES.getValue());
     }
 
     @Override
     public Map postInventoryItems(List<Inventory> body) {
-        return postEntities(body, EndpointBaseType.INVENTORY_ITEMS);
+        return postEntities(body, EndpointBaseType.INVENTORY_ITEMS.getValue());
     }
 
     @Override
     public Map postInvoices(List<Invoice> body) {
-        return postEntities(body, EndpointBaseType.INVOICES);
+        return postEntities(body, EndpointBaseType.INVOICES.getValue());
     }
 
     @Override
     public Map postInvoiceTaxes(List<InvoiceTax> body) {
-        return postEntities(body, EndpointBaseType.INVOICE_TAXES);
+        return postEntities(body, EndpointBaseType.INVOICE_TAXES.getValue());
     }
 
     @Override
     public Map postOrders(List<Order> body) {
-        return postEntities(body, EndpointBaseType.ORDERS);
+        return postEntities(body, EndpointBaseType.ORDERS.getValue());
     }
 
     @Override
     public Map postOrderStatuses(List<OrderStatus> body) {
-        return postEntities(body, EndpointBaseType.ORDER_STATUSES);
+        return postEntities(body, EndpointBaseType.ORDER_STATUSES.getValue());
     }
 
     @Override
     public Map postOrderTaxes(List<OrderTax> body) {
-        return postEntities(body, EndpointBaseType.ORDER_TAXES);
+        return postEntities(body, EndpointBaseType.ORDER_TAXES.getValue());
     }
 
     @Override
     public Map postProductPrices(List<ProductPrice> body) {
-        return postEntities(body, EndpointBaseType.PRODUCT_PRICES);
+        return postEntities(body, EndpointBaseType.PRODUCT_PRICES.getValue());
     }
 
     @Override
     public Map postReturns(List<Return> body) {
-        return postEntities(body, EndpointBaseType.RETURNS);
+        return postEntities(body, EndpointBaseType.RETURNS.getValue());
     }
 
     @Override
     public List<CompInvoice> getCompInvoices() {
-        final List<Map<String, Object>> compInvoicesList = getEntities(EndpointBaseType.COMP_INVOICES);
+        final List<Map<String, Object>> compInvoicesList = getEntities(EndpointBaseType.COMP_INVOICES.getValue());
         final List<CompInvoice> compInvoices = new ArrayList();
         compInvoicesList.forEach(compInvoiceMap -> {
             final ObjectMapper mapper = new ObjectMapper();
@@ -171,7 +171,7 @@ public class DMSAPI implements DMS {
 
     @Override
     public List<CreditNote> getCreditNotes() {
-        final List<Map<String, Object>> creditNotesList = getEntities(EndpointBaseType.CREDIT_NOTES);
+        final List<Map<String, Object>> creditNotesList = getEntities(EndpointBaseType.CREDIT_NOTES.getValue());
         final List<CreditNote> creditNotes = new ArrayList();
         creditNotesList.forEach(creditNoteMap -> {
             final ObjectMapper mapper = new ObjectMapper();
@@ -184,7 +184,7 @@ public class DMSAPI implements DMS {
 
     @Override
     public List<Customer> getCustomers() {
-        final List<Map<String, Object>> customersList = getEntities(EndpointBaseType.CUSTOMERS);
+        final List<Map<String, Object>> customersList = getEntities(EndpointBaseType.CUSTOMERS.getValue());
         final List<Customer> customers = new ArrayList();
         customersList.forEach(customerMap -> {
             final ObjectMapper mapper = new ObjectMapper();
@@ -197,7 +197,7 @@ public class DMSAPI implements DMS {
 
     @Override
     public List<CustomerContact> getCustomerContacts() {
-        final List<Map<String, Object>> customerContactsList = getEntities(EndpointBaseType.CUSTOMER_CONTACTS);
+        final List<Map<String, Object>> customerContactsList = getEntities(EndpointBaseType.CUSTOMER_CONTACTS.getValue());
         final List<CustomerContact> customerContacts = new ArrayList();
         customerContactsList.forEach(customerContactMap -> {
             final ObjectMapper mapper = new ObjectMapper();
@@ -210,7 +210,7 @@ public class DMSAPI implements DMS {
 
     @Override
     public List<CustomerShipToAddress> getCustomerShipToAddresses() {
-        final List<Map<String, Object>> customerShipToAddressesList = getEntities(EndpointBaseType.CUSTOMER_SHIP_TO_ADDRESESS);
+        final List<Map<String, Object>> customerShipToAddressesList = getEntities(EndpointBaseType.CUSTOMER_SHIP_TO_ADDRESESS.getValue());
         final List<CustomerShipToAddress> customerShipToAddresses = new ArrayList();
         customerShipToAddressesList.forEach(customerShipToAddressMap -> {
             final ObjectMapper mapper = new ObjectMapper();
@@ -223,7 +223,7 @@ public class DMSAPI implements DMS {
 
     @Override
     public List<DebitNote> getDebitNotes() {
-        final List<Map<String, Object>> debitNotesList = getEntities(EndpointBaseType.DEBIT_NOTES);
+        final List<Map<String, Object>> debitNotesList = getEntities(EndpointBaseType.DEBIT_NOTES.getValue());
         final List<DebitNote> debitNotes = new ArrayList();
         debitNotesList.forEach(debitNoteMap -> {
             final ObjectMapper mapper = new ObjectMapper();
@@ -236,7 +236,7 @@ public class DMSAPI implements DMS {
 
     @Override
     public List<Inventory> getInventoryItems() {
-        final List<Map<String, Object>> inventoryItemsList = getEntities(EndpointBaseType.INVENTORY_ITEMS);
+        final List<Map<String, Object>> inventoryItemsList = getEntities(EndpointBaseType.INVENTORY_ITEMS.getValue());
         final List<Inventory> inventoryItems = new ArrayList();
         inventoryItemsList.forEach(inventoryMap -> {
             final ObjectMapper mapper = new ObjectMapper();
@@ -249,7 +249,7 @@ public class DMSAPI implements DMS {
 
     @Override
     public List<Invoice> getInvoices() {
-        final List<Map<String, Object>> invoicesList = getEntities(EndpointBaseType.INVOICES);
+        final List<Map<String, Object>> invoicesList = getEntities(EndpointBaseType.INVOICES.getValue());
         final List<Invoice> invoices = new ArrayList();
         invoicesList.forEach(invoiceMap -> {
             final ObjectMapper mapper = new ObjectMapper();
@@ -262,7 +262,7 @@ public class DMSAPI implements DMS {
 
     @Override
     public List<InvoiceTax> getInvoiceTaxes() {
-        final List<Map<String, Object>> invoiceTaxesList = getEntities(EndpointBaseType.INVOICE_TAXES);
+        final List<Map<String, Object>> invoiceTaxesList = getEntities(EndpointBaseType.INVOICE_TAXES.getValue());
         final List<InvoiceTax> invoiceTaxes = new ArrayList();
         invoiceTaxesList.forEach(invoiceTaxMap -> {
             final ObjectMapper mapper = new ObjectMapper();
@@ -275,7 +275,7 @@ public class DMSAPI implements DMS {
 
     @Override
     public List<Order> getOrders() {
-        final List<Map<String, Object>> ordersList = getEntities(EndpointBaseType.ORDERS);
+        final List<Map<String, Object>> ordersList = getEntities(EndpointBaseType.ORDERS.getValue());
         final List<Order> orders = new ArrayList();
         ordersList.forEach(orderMap -> {
             final ObjectMapper mapper = new ObjectMapper();
@@ -288,7 +288,7 @@ public class DMSAPI implements DMS {
 
     @Override
     public List<OrderStatus> getOrderStatuses() {
-        final List<Map<String, Object>> orderStatusesList = getEntities(EndpointBaseType.ORDER_STATUSES);
+        final List<Map<String, Object>> orderStatusesList = getEntities(EndpointBaseType.ORDER_STATUSES.getValue());
         final List<OrderStatus> orderStatuses = new ArrayList();
         orderStatusesList.forEach(orderStatusMap -> {
             final ObjectMapper mapper = new ObjectMapper();
@@ -301,7 +301,7 @@ public class DMSAPI implements DMS {
 
     @Override
     public List<OrderTax> OrderTaxes() {
-        final List<Map<String, Object>> orderTaxesList = getEntities(EndpointBaseType.ORDER_TAXES);
+        final List<Map<String, Object>> orderTaxesList = getEntities(EndpointBaseType.ORDER_TAXES.getValue());
         final List<OrderTax> orderTaxes = new ArrayList();
         orderTaxesList.forEach(orderTaxMap -> {
             final ObjectMapper mapper = new ObjectMapper();
@@ -314,7 +314,7 @@ public class DMSAPI implements DMS {
 
     @Override
     public List<ProductPrice> getProductPrices() {
-        final List<Map<String, Object>> productPricesList = getEntities(EndpointBaseType.PRODUCT_PRICES);
+        final List<Map<String, Object>> productPricesList = getEntities(EndpointBaseType.PRODUCT_PRICES.getValue());
         final List<ProductPrice> productPrices = new ArrayList();
         productPricesList.forEach(productPriceMap -> {
             final ObjectMapper mapper = new ObjectMapper();
@@ -327,7 +327,7 @@ public class DMSAPI implements DMS {
 
     @Override
     public List<Return> getReturns() {
-        final List<Map<String, Object>> returnsList = getEntities(EndpointBaseType.RETURNS);
+        final List<Map<String, Object>> returnsList = getEntities(EndpointBaseType.RETURNS.getValue());
         final List<Return> returns = new ArrayList();
         returnsList.forEach(returnMap -> {
             final ObjectMapper mapper = new ObjectMapper();

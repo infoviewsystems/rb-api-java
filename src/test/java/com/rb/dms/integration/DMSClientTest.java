@@ -1,8 +1,7 @@
 package com.rb.dms.integration;
 
-import com.rb.dms.DMS;
-import com.rb.dms.DMSAPI;
-import com.rb.dms.model.Inventory;
+import com.rb.dms.api.DMS;
+import com.rb.dms.api.DMSAPI;
 import com.rb.dms.model.Order;
 import com.rb.dms.model.OrderStatus;
 import com.rb.dms.oauth.OAuthConfig;
@@ -10,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,22 +17,34 @@ import java.util.Map;
 
 public class DMSClientTest {
 
-    private static final String OAUTH2_URL = "http://rboauth2.cloudhub.io/token";
-    private static final String CLIENT_ID = "89412b6a67084fee872636e487e66970";
-    private static final String CLIENT_SECRET = "a547facd634f454096D9ED83CB5FA9E4";
-    private static final String DMS_URL = "http://rbdms-uat.cloudhub.io";
-    private static final String COUNTRY_CODE = "EA";
-    private static final String DB_NAME = "TEST";
+    @Value("${oauth2.url}")
+   	String oauth2Url;
+
+   	@Value("${api.clientId}")
+   	String clientId;
+
+   	@Value("${api.clientSecret}")
+   	String clientSecret;
+
+   	@Value("${api.host}")
+   	String dmsUrl;
+
+   	@Value("${api.countryCode}")
+   	String countryCode;
+
+   	@Value("${api.dbName}")
+   	String dbName;
 
     private DMS dms;
 
     @Before
     public void setUp() {
-        OAuthConfig oAuthConfig = new OAuthConfig(OAUTH2_URL, CLIENT_ID, CLIENT_SECRET);
-        dms = new DMSAPI(oAuthConfig, DMS_URL, COUNTRY_CODE, DB_NAME);
+        OAuthConfig oAuthConfig = new OAuthConfig(oauth2Url, clientId, clientSecret);
+        dms = new DMSAPI(oAuthConfig, dmsUrl, countryCode, dbName);
     }
 
     @Test
+    @Ignore
     public void apiCreateOrderStatusTest() {
         final List<OrderStatus> body = new ArrayList();
         OrderStatus orderStatus = new OrderStatus();
@@ -47,6 +59,7 @@ public class DMSClientTest {
     }
 
     @Test
+    @Ignore
     public void apiGetOrdersTest() {
         final List<Order> orders = dms.getOrders();
 

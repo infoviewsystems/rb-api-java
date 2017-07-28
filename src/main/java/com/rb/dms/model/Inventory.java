@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "distribtorCode",
-        "distribtorName",
+        "distributorCode",
+        "distributorName",
         "warehouseCode",
         "warehouseName",
         "productCode",
@@ -20,10 +20,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 })
 public class Inventory extends Entity {
 
-    @JsonProperty("distribtorCode")
-    private String distribtorCode;
-    @JsonProperty("distribtorName")
-    private String distribtorName;
+    @JsonProperty("distributorCode")
+    private String distributorCode;
+    @JsonProperty("distributorName")
+    private String distributorName;
     @JsonProperty("warehouseCode")
     private String warehouseCode;
     @JsonProperty("warehouseName")
@@ -43,24 +43,24 @@ public class Inventory extends Entity {
     @JsonProperty("costPrice")
     private Double costPrice;
 
-    @JsonProperty("distribtorCode")
-    public String getDistribtorCode() {
-        return distribtorCode;
+    @JsonProperty("distributorCode")
+    public String getDistributorCode() {
+        return distributorCode;
     }
 
-    @JsonProperty("distribtorCode")
-    public void setDistribtorCode(String distribtorCode) {
-        this.distribtorCode = distribtorCode;
+    @JsonProperty("distributorCode")
+    public void setDistributorCode(String distributorCode) {
+        this.distributorCode = distributorCode;
     }
 
-    @JsonProperty("distribtorName")
-    public String getDistribtorName() {
-        return distribtorName;
+    @JsonProperty("distributorName")
+    public String getDistributorName() {
+        return distributorName;
     }
 
-    @JsonProperty("distribtorName")
-    public void setDistribtorName(String distribtorName) {
-        this.distribtorName = distribtorName;
+    @JsonProperty("distributorName")
+    public void setDistributorName(String distributorName) {
+        this.distributorName = distributorName;
     }
 
     @JsonProperty("warehouseCode")
